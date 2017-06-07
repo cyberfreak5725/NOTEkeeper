@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+<style>
+@import url(https://fonts.googleapis.com/css?family=Lato:900);
+*, *:before, *:after{
+  box-sizing:border-box;
+}
+body{
+  font-family: 'Lato', sans-serif;
+    ;
+}
+div.foo{
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+.letter{
+  display: inline-block;
+  font-weight: 900;
+  font-size: 8em;
+  margin: 0.2em;
+  position: relative;
+  color: #DF0174;
+  transform-style: preserve-3d;
+  perspective: 400;
+  z-index: 1;
+}
+.letter:before, .letter:after{
+  position:absolute;
+  content: attr(data-letter);
+  transform-origin: top left;
+  top:0;
+  left:0;
+}
+.letter, .letter:before, .letter:after{
+  transition: all 0.3s ease-in-out;
+}
+.letter:before{
+  color: #fff;
+  text-shadow: 
+    -1px 0px 1px rgba(255,255,255,.8),
+    1px 0px 1px rgba(0,0,0,.8);
+  z-index: 3;
+  transform:
+    rotateX(0deg)
+    rotateY(-15deg)
+    rotateZ(0deg);
+}
+.letter:after{
+  color: rgba(0,0,0,.11);
+  z-index:2;
+  transform:
+    scale(1.08,1)
+    rotateX(0deg)
+    rotateY(0deg)
+    rotateZ(0deg)
+    skew(0deg,1deg);
+}
+.letter:hover:before{
+  color: #fafafa;
+  transform:
+    rotateX(0deg)
+    rotateY(-40deg)
+    rotateZ(0deg);
+}
+.letter:hover:after{
+  transform:
+    scale(1.08,1)
+    rotateX(0deg)
+    rotateY(40deg)
+    rotateZ(0deg)
+    skew(0deg,22deg);
+}
+hr.style-eight { padding: 0; border: none; border-top: medium double #333; color: #333; text-align: center; } 
+hr.style-eight:after { content: "§"; display: inline-block; position: relative; top: -0.7em; font-size: 1.5em; padding: 0 0.25em; background: white; }
+.textbox{
+   position:relative;
+   display:inline-block;
+}
+</style>
+
+<title id="cool">
+NOTEkeeper
+</title>
+</head>
+<body>
+<header>
+<div class="foo">
+  <span class="letter" data-letter="NOTEkeeper">NOTEkeeper</span>
+</div>
+</header>
+<center><font style="comic sans ms" size="4">Keep Track---</font></center>
+<hr>
+<p id="p">Enter the new NOTE </p>
+<input type="text" id="demo"></input>
+<br>
+<br>
+<button id="b-one" type="button" onClick="myFunction()">ENTER NOTES</button>
+<button id="b-two" type="button" onClick="myFunction1()">CLEAR</button>
+<button id="b-three" type="button" onClick="myFunction2()">DELETE NOTE</button>
+<button id="b-four" type="button" onClick="myFunction3()">MODIFY NOTE</button>
+<br>
+<button id="b-five" type="button" onClick="myFunction4()">DISPLAY ALL NOTES</button>
+<button id="b-six" type="button" onClick="myFunction5()">SAVE</button>
+<hr>
+<p id="out"></p>
+<script type="text/javascript">
+var count=0;var ctr=0;var str=0;
+function titlebar(val)
+{
+var msg = "NOTEkeeper";
+var speed = 500;
+var pos = val;var msg1 = "****** "+msg+" ******";
+var msg2 = "------- "+msg+" -------";if(pos == 0)
+{
+masg = msg1;
+pos = 1;
+}
+else if(pos == 1)
+{
+masg = msg2;
+pos = 0;
+}
+document.title = masg;
+timer = window.setTimeout("titlebar("+pos+")",speed); }
+titlebar(0);
+var s="";var fin_res;var index;
+
+function myFunction()
+{ count++;
+ var email = document.getElementById("demo").value;
+ s=s+email+"|";
+ if(count==1)
+ alert("First enter all the notes and then click SAVE button!!")
+}
+
+function myFunction5()
+{ 
+ localStorage.setItem("notes",s);
+}
+
+function myFunction4()
+{ var nfin_res;
+ var res=localStorage.getItem("notes");
+ nfin_res=res.split("|");
+ fin_res=res.split("|");
+document.getElementById("out").innerHTML=nfin_res;
+}
+
+function myFunction2()
+{ ctr++;
+if(ctr==1)  
+alert("0-based indexing allowed");
+
+    var index= prompt("Which note you want to delete ?", "1");
+   var i;
+   s="";
+   for(i=0;i<fin_res.length;i++)
+   {
+   if(i!=index)
+     s=s+"|"+fin_res[i];   
+   }
+   document.getElementById("out").innerHTML="";
+   localStorage.clear();
+   localStorage.setItem("notes",s);
+}
+
+function myFunction3()
+{
+   str++;
+if(str==1)  
+alert("0-based indexing allowed");
+
+    var index= prompt("Which note you want to modify?", "1");
+    var news=prompt("Write modified note ","NOTHING");
+   var i;
+   s="";
+   for(i=0;i<fin_res.length;i++)
+   {
+   if(i!=index)
+     s=s+"|"+fin_res[i];
+     else {
+     	s=s+"|"+news;
+     }   
+   }
+   document.getElementById("out").innerHTML="";
+   localStorage.clear();
+   localStorage.setItem("notes",s);
+}
+function myFunction1()
+{
+ document.getElementById("demo").value="";
+ document.getElementById("out").innerHTML="";
+}
+</script> 
+<marquee> THE WEBPAGE IS IN BETA STAGE!!:-)</marquee>
+</body>
+</html>
